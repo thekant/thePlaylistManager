@@ -1,4 +1,4 @@
-package com.amazon.prime.social.share.plateform.dao;
+package com.kant.social.share.plateform.dao;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.amazon.prime.social.share.plateform.entity.PrimeUser;
+import com.kant.social.share.plateform.entity.PrimeUser;
 
 @Repository
 public class PersonDao {

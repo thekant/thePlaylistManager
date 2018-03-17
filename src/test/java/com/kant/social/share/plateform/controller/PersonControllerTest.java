@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.amazon.prime.social.share.plateform.entity.PrimeUser;
 import com.kant.social.share.plateform.controller.PersonController;
+import com.kant.social.share.plateform.entity.PrimeUser;
 
 @ContextConfiguration("/test-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)

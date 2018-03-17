@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.amazon.prime.social.share.plateform.entity;
+package com.kant.social.share.plateform.entity;
 
 /**
  * @author kantsh

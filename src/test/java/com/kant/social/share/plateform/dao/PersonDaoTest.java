@@ -1,9 +1,10 @@
-package com.amazon.prime.social.share.plateform.dao;
+package com.kant.social.share.plateform.dao;
 
 import java.util.List;
 
-import com.amazon.prime.social.share.plateform.entity.PrimeUser;
 import com.kant.social.share.plateform.controller.DataInitializer;
+import com.kant.social.share.plateform.dao.PersonDao;
+import com.kant.social.share.plateform.entity.PrimeUser;
 
 import org.junit.Assert;
 import org.junit.Before;

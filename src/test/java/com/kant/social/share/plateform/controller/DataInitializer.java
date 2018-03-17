@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.amazon.prime.social.share.plateform.entity.PrimeUser;
+import com.kant.social.share.plateform.entity.PrimeUser;
 
 @Component
 @Scope("prototype")

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.amazon.prime.social.share.plateform.request.model.Playlist;
+import com.kant.social.share.plateform.request.model.Playlist;
 
 /**
  * Sample controller for going to the home page with a message

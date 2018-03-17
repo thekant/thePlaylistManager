@@ -1,4 +1,4 @@
-package com.amazon.prime.social.share.plateform.entity;
+package com.kant.social.share.plateform.entity;
 
 import java.util.ArrayList;
 import java.util.List;

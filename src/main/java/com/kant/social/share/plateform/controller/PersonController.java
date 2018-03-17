@@ -2,8 +2,8 @@ package com.kant.social.share.plateform.controller;
 
 import java.util.List;
 
-import com.amazon.prime.social.share.plateform.dao.PersonDao;
-import com.amazon.prime.social.share.plateform.entity.PrimeUser;
+import com.kant.social.share.plateform.dao.PersonDao;
+import com.kant.social.share.plateform.entity.PrimeUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
