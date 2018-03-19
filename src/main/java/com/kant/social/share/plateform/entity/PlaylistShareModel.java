@@ -18,9 +18,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "playlist_share")
-public class PlaylistShareTable {
+public class PlaylistShareModel {
 	
-	public PlaylistShareTable() {
+	public PlaylistShareModel() {
 		super();
 	}
 
@@ -30,10 +30,10 @@ public class PlaylistShareTable {
 	private Long id;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	private PlaylistTable playlist;
+	private PlaylistModel playlist;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	private PrimeUser user;
+	private UserModel user;
 	
 	@Column
 	private Long registerationCount;
@@ -52,20 +52,20 @@ public class PlaylistShareTable {
 		this.id = id;
 	}
 
-	public PlaylistTable getPlaylist() {
+	public PlaylistModel getPlaylist() {
 		return playlist;
 	}
 
-	public void setPlaylist(PlaylistTable playlist) {
+	public void setPlaylist(PlaylistModel playlist) {
 		this.playlist = playlist;
 	}
 
-	public PrimeUser getUser() {
+	public UserModel getUser() {
 		return user;
 	}
 
-	public void setUser(PrimeUser user) {
-		this.user = user;
+	public void setUser(UserModel userModel) {
+		this.user = userModel;
 	}
 
 	public Long getRegisterationCount() {

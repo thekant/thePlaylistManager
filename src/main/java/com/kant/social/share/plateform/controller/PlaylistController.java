@@ -1,61 +1,63 @@
 package com.kant.social.share.plateform.controller;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.kant.social.share.plateform.request.model.Playlist;
+import com.kant.social.share.plateform.model.Playlist;
+import com.kant.social.share.plateform.service.PlaylistService;
 
 /**
  * Sample controller for going to the home page with a message
  */
-@Controller
-@RequestMapping("/playlist")
+@RestController
+@RequestMapping("{userid}/playlist")
 public class PlaylistController {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(PlaylistController.class);
+	@Autowired
+	private PlaylistService playlistService;
 
 	/**
-	 * Selects the home page and populates the model with a message
+	 * playlist creation works.
+	 * 
+	 * @param playlist
+	 * @param userid
+	 * @return
 	 */
-	@RequestMapping( method = RequestMethod.GET)
-	@ResponseBody
-	public List<Playlist> home(String userId ) {
-		logger.info("Welcome home!");
-		
-		//step 1 : fetch user's playlist from userId
-		
-		//model.addAttribute("controllerMessage",
-		//		"This is the message from the controller!");
-		
-		return null;
+	@PostMapping()
+	public ResponseEntity<?> save(@RequestBody Playlist playlist, @PathVariable("userid") long userid) {
+		long id = playlistService.save(playlist, userid);
+		return new ResponseEntity<String>("New Playlist has been saved with ID:" + id, HttpStatus.OK);
 	}
-	
-	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String createPlaylist(@ModelAttribute("playlist")Playlist playlist, String userId) {
-		logger.info("creating playlist!");
-		return "";
+
+	/*---Get a playlist by id---*/
+	@GetMapping(value= "{id}" , produces="application/json")
+	public ResponseEntity<Playlist> get(@PathVariable("id") long id) {
+		Playlist playlist = playlistService.get(id);
+		return new ResponseEntity<Playlist>(playlist, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/save", method = RequestMethod.PUT)
-	public String updatePlaylist(@ModelAttribute("playlist")Playlist playlist, String userId) {
-		logger.info("updating playlist!");
-		return "updating";
+
+	/*---Update a book by id---*/
+	@PutMapping("{id}")
+	public ResponseEntity<?> update(@RequestBody Playlist playlist) {
+		playlistService.update(playlist);
+		return new ResponseEntity<String>("New Book has been successfully updated" + playlist.getId(), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/publish", method = RequestMethod.PUT)
-	public String publishPlaylist(String playlistId, String userId) {
-		logger.info("publishing playlist!");
-		return "";
+
+	/*---Delete a book by id---*/
+	@DeleteMapping("{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") long id,  @PathVariable("userid") long userid) {
+		playlistService.delete(id,userid);
+		return new ResponseEntity<String>("New Book has been successfully deleted" + id, HttpStatus.OK);
 	}
-	
 
 }

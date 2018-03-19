@@ -3,8 +3,8 @@ package com.kant.social.share.plateform.dao;
 import java.util.List;
 
 import com.kant.social.share.plateform.controller.DataInitializer;
-import com.kant.social.share.plateform.dao.PersonDao;
-import com.kant.social.share.plateform.entity.PrimeUser;
+import com.kant.social.share.plateform.dao.UserDao;
+import com.kant.social.share.plateform.entity.UserModel;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PersonDaoTest {
 
 	@Autowired
-	private PersonDao personDao;
+	private UserDao personDao;
 
 	@Autowired
 	private DataInitializer dataInitializer;
@@ -33,7 +33,7 @@ public class PersonDaoTest {
 
 	@Test
 	public void shouldSaveAPerson() {
-		PrimeUser p = new PrimeUser();
+		UserModel p = new UserModel();
 		p.setFirstName("Andy");
 		p.setLastName("Gibson");
 		personDao.save(p);
@@ -44,14 +44,14 @@ public class PersonDaoTest {
 	@Test
 	public void shouldLoadAPerson() {
 		Long template = dataInitializer.people.get(0);
-		PrimeUser p = personDao.find(template);
+		UserModel p = personDao.find(template);
 
 		Assert.assertNotNull("Person not found!", p);
 		Assert.assertEquals(template, p.getId());
 	}
 
 	public void shouldListPeople() {
-		List<PrimeUser> people = personDao.getPeople();
+		List<UserModel> people = personDao.getPeople();
 		Assert.assertEquals(DataInitializer.PERSON_COUNT, people.size());
 
 	}

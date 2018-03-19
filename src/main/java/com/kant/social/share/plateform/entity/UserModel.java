@@ -7,13 +7,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class PrimeUser implements Serializable {
+public class UserModel implements Serializable {
 
 	private static final long serialVersionUID = -1308795024262635690L;
 
@@ -26,28 +27,33 @@ public class PrimeUser implements Serializable {
 
 	@Column
 	private String lastName;
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PlaylistTable> items = new ArrayList<PlaylistTable>();
-	
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PlaylistShareTable> shares = new ArrayList<PlaylistShareTable>();
 
-	public PrimeUser() {
+	@OneToMany(fetch = FetchType.EAGER, mappedBy= "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PlaylistModel> playlists = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PlaylistShareModel> shares =new ArrayList<>();
+
+	public UserModel() {
 	}
-	
-	public void addPlayList(PlaylistTable item) {
-        this.items.add(item);
-        item.setUser(this);
-    }
-	
-	public void addPlayList(PlaylistShareTable item) {
-        this.shares.add(item);
-        item.setUser(this);
-    }
-	
-	public PrimeUser(String firstName, String lastName) {
+
+	public List<PlaylistModel> getPlaylists() {
+		return playlists;
+	}
+
+	public List<PlaylistShareModel> getShares() {
+		return shares;
+	}
+
+	public void setPlaylists(List<PlaylistModel> playlists) {
+		this.playlists = playlists;
+	}
+
+	public void setShares(List<PlaylistShareModel> shares) {
+		this.shares = shares;
+	}
+
+	public UserModel(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -80,19 +86,16 @@ public class PrimeUser implements Serializable {
 	@Override
 	public String toString() {
 
-		return super.toString() + " name = " + firstName + " " + lastName
-				+ " id = " + id;
+		return super.toString() + " name = " + firstName + " " + lastName + " id = " + id;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
 	}
 
@@ -104,7 +107,7 @@ public class PrimeUser implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PrimeUser other = (PrimeUser) obj;
+		UserModel other = (UserModel) obj;
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;

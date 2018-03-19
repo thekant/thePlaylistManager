@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.kant.social.share.plateform.entity.PrimeUser;
+import com.kant.social.share.plateform.entity.UserModel;
 
 @Component
 @Scope("prototype")
@@ -32,7 +32,7 @@ public class DataInitializer {
 	}
 
 	public void addPerson(String firstName, String lastName) {
-		PrimeUser p = new PrimeUser();
+		UserModel p = new UserModel();
 		p.setFirstName(firstName);
 		p.setLastName(lastName);
 		entityManager.persist(p);

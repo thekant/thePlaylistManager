@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,11 +14,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "Playlist")
-public class PlaylistTable {
-	
-	public PlaylistTable() {
+public class PlaylistModel {
+
+	public PlaylistModel() {
 	}
 
 	@Id
@@ -25,24 +29,22 @@ public class PlaylistTable {
 	@Column
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	private PrimeUser user;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private UserModel user;
+
+	
+	@OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<PlaylistVideosModel> videos = new ArrayList<>();
 
 	@OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<PlaylistVideosTable> videos = new ArrayList<PlaylistVideosTable>();
-
-	@OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<PlaylistShareTable> shares = new ArrayList<PlaylistShareTable>();
+	private List<PlaylistShareModel> shares;
 
 	@Column
 	private String title;
 
 	@Column
 	private String description;
-
-	public void setUser(PrimeUser user) {
-		this.user = user;
-	}
 
 	public Long getId() {
 		return id;
@@ -52,25 +54,15 @@ public class PlaylistTable {
 		this.id = id;
 	}
 
-	public List<PlaylistVideosTable> getVideos() {
+	public List<PlaylistVideosModel> getVideos() {
 		return videos;
 	}
 
-	public void addVideos(List<PlaylistVideosTable> theVideos) {
-		videos.addAll(theVideos);
-		this.videos = theVideos;
-	}
-
-	public void addShares(List<PlaylistShareTable> theShares) {
-		shares.addAll(theShares);
-		this.shares = theShares;
-	}
-
-	public List<PlaylistShareTable> getShares() {
+	public List<PlaylistShareModel> getShares() {
 		return shares;
 	}
 
-	public void setShares(List<PlaylistShareTable> shares) {
+	public void setShares(List<PlaylistShareModel> shares) {
 		this.shares = shares;
 	}
 
@@ -82,7 +74,7 @@ public class PlaylistTable {
 		this.title = title;
 	}
 
-	public void setVideos(List<PlaylistVideosTable> videos) {
+	public void setVideos(List<PlaylistVideosModel> videos) {
 		this.videos = videos;
 	}
 
@@ -94,8 +86,12 @@ public class PlaylistTable {
 		this.description = description;
 	}
 
-	public PrimeUser getUser() {
+	public UserModel getUser() {
 		return user;
+	}
+	
+	public void setUser(UserModel user) {
+		this.user = user;
 	}
 
 }

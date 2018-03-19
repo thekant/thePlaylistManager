@@ -3,10 +3,6 @@
  */
 package com.kant.social.share.plateform.entity;
 
-/**
- * @author kantsh
- *
- */
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "playlists_videos")
-public class PlaylistVideosTable {
+public class PlaylistVideosModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +22,7 @@ public class PlaylistVideosTable {
 	private Long id;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	private PlaylistTable playlist;
+	private PlaylistModel playlist;
 
 	@Column
 	private String title;
@@ -45,11 +41,11 @@ public class PlaylistVideosTable {
 		this.id = id;
 	}
 
-	public PlaylistTable getPlaylist() {
+	public PlaylistModel getPlaylist() {
 		return playlist;
 	}
 
-	public void setPlaylist(PlaylistTable playlist) {
+	public void setPlaylist(PlaylistModel playlist) {
 		this.playlist = playlist;
 	}
 

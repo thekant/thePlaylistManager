@@ -2,49 +2,53 @@ package com.kant.social.share.plateform.controller;
 
 import java.util.List;
 
-import com.kant.social.share.plateform.dao.PersonDao;
-import com.kant.social.share.plateform.entity.PrimeUser;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+
+import com.kant.social.share.plateform.model.Playlist;
+import com.kant.social.share.plateform.service.UserService;
 
 @Controller
-@RequestMapping("/person/")
-public class PersonController {
+@RequestMapping("/user/")
+public class UserController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
 
 	@Autowired
-	private PersonDao personDao;
+	private UserService userService;
 	
-	@RequestMapping(method=RequestMethod.GET,value="edit")
+	
+	/*---Fetching playlists for user---*/
+	@GetMapping("{id}/playlist")
+	public ResponseEntity<List<Playlist>> list(@PathVariable("id") Long id) {
+		List<Playlist> playlists = userService.list(id);
+		return new ResponseEntity<List<Playlist>>(playlists, HttpStatus.OK);
+	}
+	
+	/**@RequestMapping(method=RequestMethod.GET,value="edit")
 	public ModelAndView editPerson(@RequestParam(value="id",required=false) Long id) {		
 		logger.debug("Received request to edit person id : "+id);				
 		ModelAndView mav = new ModelAndView();		
  		mav.setViewName("edit");
- 		PrimeUser person = null;
+ 		UserModel person = null;
  		if (id == null) {
- 			person = new PrimeUser();
+ 			person = new UserModel();
  		} else {
- 			person = personDao.find(id);
+ 			person = userDao.find(id);
  		}
- 		
  		mav.addObject("person", person);
 		return mav;
 		
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="edit") 
-	public String savePerson(@ModelAttribute PrimeUser person) {
+	public String savePerson(@ModelAttribute UserModel person) {
 		logger.debug("Received postback on person "+person);		
-		personDao.save(person);
+		userDao.save(person);
 		return "redirect:list";
 		
 	}
@@ -53,12 +57,11 @@ public class PersonController {
 	public ModelAndView listPeople() {
 		logger.debug("Received request to list persons");
 		ModelAndView mav = new ModelAndView();
-		List<PrimeUser> people = personDao.getPeople();
+		List<UserModel> people = userDao.getPeople();
 		logger.debug("Person Listing count = "+people.size());
 		mav.addObject("people",people);
 		mav.setViewName("list");
 		return mav;
-		
-	}
-
+	}**/
+	
 }
