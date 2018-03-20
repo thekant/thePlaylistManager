@@ -17,18 +17,16 @@ import com.kant.social.share.plateform.service.UserService;
 @RequestMapping("/user/")
 public class UserController {
 	
-
 	@Autowired
 	private UserService userService;
-	
-	
+
 	/*---Fetching playlists for user---*/
 	@GetMapping("{id}/playlist")
 	public ResponseEntity<List<Playlist>> list(@PathVariable("id") Long id) {
-		List<Playlist> playlists = userService.list(id);
+		List<Playlist> playlists = userService.fetchPlaylist(id);
 		return new ResponseEntity<List<Playlist>>(playlists, HttpStatus.OK);
 	}
-	
+
 	/**@RequestMapping(method=RequestMethod.GET,value="edit")
 	public ModelAndView editPerson(@RequestParam(value="id",required=false) Long id) {		
 		logger.debug("Received request to edit person id : "+id);				

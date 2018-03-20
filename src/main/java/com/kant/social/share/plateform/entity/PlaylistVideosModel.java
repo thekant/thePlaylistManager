@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "playlists_videos")
+@Table(name = "playlist_video")
 public class PlaylistVideosModel {
 
 	@Id
@@ -71,6 +71,21 @@ public class PlaylistVideosModel {
 
 	public void setVlink(String vlink) {
 		this.vlink = vlink;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		PlaylistVideosModel theModel = (PlaylistVideosModel) obj;
+		if (theModel.getId() == null)
+			return false;
+		return (theModel.getId().equals(this.getId()));
+	}
+
+	@Override
+	public int hashCode() {
+		return getId().intValue();
 	}
 
 }

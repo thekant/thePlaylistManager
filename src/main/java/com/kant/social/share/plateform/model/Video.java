@@ -21,12 +21,21 @@ public class Video {
 	public Video() {
 	}
 
-	public Video(Long id, String title, String description, String link) {
+	public Video(Long id, String title, String description, String link, boolean remove) {
 		super();
 		this.setId(id);
-		this.title = title;
-		this.description = description;
-		this.link = link;
+		this.setTitle(title);
+		this.setDescription(description);
+		this.setLink(link);
+	}
+
+	public Video(PlaylistVideosModel model) {
+		if (model != null) {
+			this.setId(model.getId());
+			this.setTitle(model.getTitle());
+			this.setDescription(model.getDescription());
+			this.setLink(model.getVlink());
+		}
 	}
 
 	/**
@@ -74,6 +83,10 @@ public class Video {
 		this.link = link;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public PlaylistVideosModel toDaoObject() {
 		PlaylistVideosModel dbObject = new PlaylistVideosModel();
 		dbObject.setDescription(getDescription());

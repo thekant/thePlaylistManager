@@ -25,7 +25,7 @@ public class UserService {
 	@Autowired
 	UserDao dao;
 
-	public List<Playlist> list(Long id) {
+	public List<Playlist> fetchPlaylist(Long id) {
 		List<PlaylistModel> playlists = dao.find(id).getPlaylists();
 		List<Playlist> result = new ArrayList<>();
 		if (playlists != null) {

@@ -57,6 +57,7 @@ public class UserDao {
 			PlaylistModel next = iterator.next();
 			if(next.getId().equals(playlistId)) {
 				iterator.remove();
+				next.setUser(null);
 				break;
 			}
 		}

@@ -3,6 +3,8 @@
  */
 package com.kant.social.share.plateform.dao;
 
+import java.util.Iterator;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kant.social.share.plateform.entity.PlaylistModel;
+import com.kant.social.share.plateform.entity.PlaylistVideosModel;
 import com.kant.social.share.plateform.entity.UserModel;
 
 /**
@@ -40,12 +43,13 @@ public class PlayListDao {
 		PlaylistModel result = entityManager.find(PlaylistModel.class, id);
 		return result;
 	}
-
+	
 	@Transactional
-	public void update(PlaylistModel playlist) {
+	public void update(PlaylistModel playlist,long id) {
 		if (playlist.getId() == null)
 			return;
-		PlaylistModel modelToSave = entityManager.find(PlaylistModel.class, playlist.getId());
+		PlaylistModel modelToSave = entityManager.find(PlaylistModel.class, id);
+		
 		if (playlist.getTitle() != null)
 			modelToSave.setTitle(playlist.getTitle());
 		if (playlist.getDescription() != null)
@@ -58,5 +62,28 @@ public class PlayListDao {
 		}
 		entityManager.persist(modelToSave);
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param playlistid
+	 */
+	@Transactional
+	public void deleteVideoFromPlaylist(long id, long playlistid) {
+		PlaylistModel playlist = entityManager.find(PlaylistModel.class, playlistid);
 
+		if (playlist.getVideos() != null) {
+			Iterator<PlaylistVideosModel> iterator = playlist.getVideos().iterator();
+			while (iterator.hasNext()) {
+				PlaylistVideosModel next = iterator.next();
+				if (next.getId().equals(id)) {
+					iterator.remove();
+					next.setPlaylist(null);
+					break;
+				}
+			}
+		}
+		entityManager.persist(playlist);
+	}
+	
 }

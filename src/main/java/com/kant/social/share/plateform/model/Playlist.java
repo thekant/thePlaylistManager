@@ -20,37 +20,41 @@ import com.kant.social.share.plateform.entity.PlaylistVideosModel;
 @XmlRootElement
 public class Playlist {
 
-	
 	private Long id;
-	
 	private String title;
-	
 	private String description;
-	
 	private List<Video> videos;
 
 	public Playlist() {
 	}
 
+	/**
+	 * 
+	 * @param model
+	 */
 	public Playlist(PlaylistModel model) {
-		this(model.getId(), model.getTitle(), model.getDescription(),
-				null);
-		List<Video> vids= new ArrayList<>();
-		if(model.getVideos()!=null) {
-			Iterator<PlaylistVideosModel> iterator = model.getVideos().iterator();
-			while(iterator.hasNext()) {
-				PlaylistVideosModel next = iterator.next();
-				vids.add(new Video (next.getId(),next.getTitle(),next.getDescription(),next.getVlink()));
+		if (model != null) {
+			setId(model.getId());
+			setTitle(model.getTitle());
+			setDescription(model.getDescription());
+			List<Video> vids = new ArrayList<>();
+			if (model.getVideos() != null) {
+				Iterator<PlaylistVideosModel> iterator = model.getVideos().iterator();
+				while (iterator.hasNext()) {
+					vids.add(new Video(iterator.next()));
+				}
+				setVideos(vids);
 			}
-			setVideos(vids);
 		}
-		
-		//stream()
-		//.map(x -> new Video(x.getId(), x.getTitle(), x.getDescription(), x.getVlink()))
-		//.collect(Collectors.toList());
-		
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param title
+	 * @param description
+	 * @param videos
+	 */
 	public Playlist(Long id, String title, String description, List<Video> videos) {
 		super();
 		setId(id);
@@ -59,7 +63,7 @@ public class Playlist {
 		setVideos(videos);
 	}
 
-	@XmlElement(name="playlist_id")
+	@XmlElement(name = "id")
 	public Long getId() {
 		return id;
 	}
@@ -68,7 +72,7 @@ public class Playlist {
 		this.id = id;
 	}
 
-	@XmlElement(name="videos")
+	@XmlElement(name = "videos")
 	public List<Video> getVideos() {
 		return videos;
 	}
@@ -80,7 +84,7 @@ public class Playlist {
 	/**
 	 * @return the title
 	 */
-	@XmlElement(name="title")
+	@XmlElement(name = "title")
 	public String getTitle() {
 		return title;
 	}
@@ -96,7 +100,7 @@ public class Playlist {
 	/**
 	 * @return the description
 	 */
-	@XmlElement(name="description")
+	@XmlElement(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -115,7 +119,7 @@ public class Playlist {
 		dbobj.setDescription(getDescription());
 		dbobj.setTitle(getTitle());
 
-		List<PlaylistVideosModel> items = new ArrayList<PlaylistVideosModel>();
+		List<PlaylistVideosModel> items = new ArrayList<>();
 		if (videos != null) {
 			Iterator<Video> iterator = getVideos().iterator();
 			while (iterator.hasNext()) {
